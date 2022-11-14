@@ -1,2 +1,2 @@
-# Boid-Flock-Emergent-AI
+# Boid Flock Emergent AI
 Temp Description
