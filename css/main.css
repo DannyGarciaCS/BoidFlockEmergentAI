@@ -1,0 +1,38 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    object-fit: cover;
+    position: fixed;
+}
+
+#menu {
+    background-color: rgba(255, 255, 255, 0.08);
+    position: fixed;
+    bottom: -60px;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.4s ease bottom;
+}
+
+#title {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin: 15px 0px;
+}
+
+#settings {
+    height: 60px;
+    width: 100%;
+    background-color: rgb(40, 40, 40);
+    display: flex;
+    align-items: center;
+}

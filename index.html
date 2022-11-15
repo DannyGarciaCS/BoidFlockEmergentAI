@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Meta data -->
+    <title>Danny Garcia CS</title>
+    <meta name="description" content="">
+    <meta name="author" content="Danny Garcia">
+
+    <!-- JavaScript libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+
+    <!-- Main JavaScript files -->
+    <script src="js/boid.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Settings menu -->
+    <div id="menu" onmouseover="expand()" onmouseout="contract()">
+
+        <p id="title">▼ MENU</p>
+
+        <div id="settings">
+            <div style="margin:0 auto;">
+                <input type="range" min="0" max="5" step="0.1" class="slider" value= "1" id="align">
+                <input type="range" min="0" max="5" step="0.1" class="slider" value= "1"  id="cohesion">
+                <input type="range" min="0" max="5" step="0.1" class="slider" value= "1"  id="separation">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
