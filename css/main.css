@@ -23,10 +23,9 @@ canvas {
 }
 
 #title {
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     color: white;
-    margin: 15px 0px;
+    margin: 10px 0px;
 }
 
 #settings {
@@ -36,3 +35,6 @@ canvas {
     display: flex;
     align-items: center;
 }
+
+/* Slider style */
+input {}

@@ -1,34 +1,50 @@
+
+// Can be controlled with wasd
+// Try to avoid collisions
+// Directional line
+// Optimizations
+
+
 class Boid {
 
     // Object constructor
-    constructor(canvasX, canvasY) {
+    constructor(primary) {
 
-        this.canvasX = canvasX;
-        this.canvasY = canvasY;
+        this.primary = primary;
+
+        // Slider variables
+        this.alignmentForce = 3;
+        this.cohesionForce = 2.9;
+        this.separationForce = 3;
+        this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce];
 
         this.speed = 5;
         this.torque = 0.2;
+        
         this.sightDistance = 100;
         this.sightDegrees = 300;
 
         this.position = createVector(random(screen.width), random(screen.height));
         this.velocity = p5.Vector.random2D();
-        this.velocity.setMag(random(2, 4));
         this.acceleration = createVector();
+        this.rotation = 0;
     }
 
-    // Warps boid across the screen if out of bounds
+    updateForces() { this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce]; }
+
+    // Warps boids across the screen if out of bounds
     warp() {
 
         // Boid has left the x-axis
-        if(this.position.x > canvasX) { this.position.x = 0; }
-        else if(this.position.x < 0) { this.position.x = canvasX; }
+        if(this.position.x > width) { this.position.x = 0; }
+        else if(this.position.x < 0) { this.position.x = width; }
 
         // Boid has left the y-axis
-        if(this.position.y > canvasY) { this.position.y = 0; }
-        else if(this.position.y < 0) { this.position.y = canvasY; }
+        if(this.position.y > height) { this.position.y = 0; }
+        else if(this.position.y < 0) { this.position.y = height; }
     }
 
+    // Applies basic motion rules
     applyRules(boids) {
 
         // Initializes computation variables (alignment, cohesion, separation)
@@ -41,35 +57,32 @@ class Boid {
             if(boid != this) {
 
                 // Determines distance between boids
-                let distance = dist(this.position.x, this.position.y, boid.position.x, boid.position.y); // Need formula for this to use warp
+                let distance = dist(this.position.x, this.position.y, boid.position.x, boid.position.y);
 
                 // Distance is within sightDistance
                 if(distance <= this.sightDistance) {
                     directions[0].add(boid.velocity);
-
-                    directions[1].add(boid.position); // Take warping into consideration
+                    directions[1].add(boid.position);
+                    directions[2].add(p5.Vector.sub(this.position, boid.position).div(distance * distance));
                     count += 1;
                 }
             }
         }
 
 
+        // Applies directional changes
         if(count > 0) {
 
-            // Averages counts
-            for(let direction of directions) {
-                direction.div(count);
-            }
-
-            // Rule specific modifications
+            // Averages directions
+            for(let direction of directions) { direction.div(count); }
             directions[1].sub(this.position);
 
-            // Generic modifications
-            for(let direction of directions) {
-                direction.setMag(this.speed);
-                direction.sub(this.velocity);
-                direction.limit(this.torque);
-                this.acceleration.add(direction);
+            // Changes acceleration
+            for(let direction in directions) {
+                directions[direction].setMag(this.speed);
+                directions[direction].sub(this.velocity);
+                directions[direction].limit(this.torque);
+                this.acceleration.add(directions[direction].mult(this.forces[direction]));
             }
         }
 
@@ -78,22 +91,58 @@ class Boid {
     // Updates status of boid
     update(boids) {
 
-        // Warps boid across the screen
+        // Warps boids across the screen
         this.warp();
 
         // Reset acceleration and recalculate based on Boid rules
-        this.acceleration.mult(0)
+        this.acceleration.mult(0);
         this.applyRules(boids);
 
         // Update boid's position and velocity
         this.position.add(this.velocity);
+        this.rotation = Math.atan2(-this.velocity.x, -this.velocity.y) / (PI / 180);
         this.velocity.add(this.acceleration);
+
     }
 
     // Displays current status of boid
     display() {
-        strokeWeight(8);
-        stroke(255);
-        point(this.position.x, this.position.y);
+
+        if(this.primary) {            
+
+            strokeWeight(2);
+            stroke('rgba(0, 100, 255, 0.8)')
+            fill('rgba(0, 100, 255, 0.11)')
+            circle(this.position.x, this.position.y, this.sightDistance);
+
+            stroke(255, 25, 50);
+            fill('rgba(255, 25, 50, 0.3)')
+        }
+        else {
+            stroke(255);
+            fill('rgba(255, 255, 255, 0.2)')
+        }
+       
+        strokeWeight(1);
+
+        let height = 6.5;
+        let width = 5;
+        
+        let p1 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height, this.rotation);
+        let p2 = this.axisRotation(this.position.x, this.position.y, this.position.x + width, this.position.y + height, this.rotation);
+        let p3 = this.axisRotation(this.position.x, this.position.y, this.position.x - width, this.position.y + height, this.rotation);
+        
+        triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        //point(this.position.x, this.position.y);
+    }
+
+    // Rotates a point across a given axis
+    axisRotation(axisX, axisY, x, y, angle) {
+        const radians = (PI / 180) * angle
+        let cos = Math.cos(radians);
+        let sin = Math.sin(radians);
+        let finalX = (cos * (x - axisX)) + (sin * (y - axisY)) + axisX;
+        let finalY = (cos * (y - axisY)) - (sin * (x - axisX)) + axisY;
+        return createVector(finalX, finalY);
     }
 }
