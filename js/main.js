@@ -18,11 +18,13 @@ function draw() {
     // Canvas background
     background(60);
 
-    // Updates and draws all boids
-    for (let boid of boids) {
-        boid.update(boids);
-        boid.display();
-    }
+    // Updates and draws all boids (Main boid background in bottom layer, main boid in top layer)
+    boids[0].update(boids);
+    boids[0].display(true);
+    for (let boid=1; boid<boids.length; boid++) {
+        boids[boid].update(boids);
+        boids[boid].display();
+    } boids[0].display();
 }
 
 // Expand menu on hover

@@ -1,9 +1,10 @@
 
 // Can be controlled with wasd
-// Try to avoid collisions
 // Directional line
 // Optimizations
-
+// Speed slider
+// population slider
+// fix scrollbars
 
 class Boid {
 
@@ -14,7 +15,7 @@ class Boid {
 
         // Slider variables
         this.alignmentForce = 3;
-        this.cohesionForce = 2.9;
+        this.cohesionForce = 2.8;
         this.separationForce = 3;
         this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce];
 
@@ -106,34 +107,46 @@ class Boid {
     }
 
     // Displays current status of boid
-    display() {
+    display(drawBackground=false) {
 
         if(this.primary) {            
 
-            strokeWeight(2);
-            stroke('rgba(0, 100, 255, 0.8)')
-            fill('rgba(0, 100, 255, 0.11)')
-            circle(this.position.x, this.position.y, this.sightDistance);
+            // Draws background if enabled
+            if(drawBackground) {
+                strokeWeight(3);
+                stroke('rgba(0, 100, 255, 0.8)')
+                fill('rgba(0, 100, 255, 0.11)')
+                circle(this.position.x, this.position.y, this.sightDistance);
+            }
 
-            stroke(255, 25, 50);
-            fill('rgba(255, 25, 50, 0.3)')
+            // Main boid visuals
+            strokeWeight(2);
+            stroke(210, 25, 50);
+            fill('rgb(210, 25, 50)')
         }
+
         else {
+
+            // Generic boid visuals
+            strokeWeight(1);
             stroke(255);
             fill('rgba(255, 255, 255, 0.2)')
         }
        
-        strokeWeight(1);
+        if(!drawBackground) {
 
-        let height = 6.5;
-        let width = 5;
-        
-        let p1 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height, this.rotation);
-        let p2 = this.axisRotation(this.position.x, this.position.y, this.position.x + width, this.position.y + height, this.rotation);
-        let p3 = this.axisRotation(this.position.x, this.position.y, this.position.x - width, this.position.y + height, this.rotation);
-        
-        triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        //point(this.position.x, this.position.y);
+            // Boid size
+            let height = 6.5;
+            let width = 5;
+            
+            // Boid position
+            let p1 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height, this.rotation);
+            let p2 = this.axisRotation(this.position.x, this.position.y, this.position.x + width, this.position.y + height, this.rotation);
+            let p3 = this.axisRotation(this.position.x, this.position.y, this.position.x - width, this.position.y + height, this.rotation);
+            
+            // Draws boid
+            triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        }
     }
 
     // Rotates a point across a given axis
