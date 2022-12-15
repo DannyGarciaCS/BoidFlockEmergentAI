@@ -30,13 +30,32 @@
         <p id="title">▼ CONTROLS</p>
 
         <div id="settings">
-            <div style="margin:0 auto;">
-                <input type="range" min="50" max="300" step="1" value= "100" oninput="sightDistanceSlider(this.value)">
-                <input type="range" min="50" max="360" step="1" value= "300" oninput="sightDegreesSlider(this.value)">
+            <div id="controls">
 
-                <input type="range" min="0" max="9" step="0.1" value= "3" oninput="alignmentSlider(this.value)">
-                <input type="range" min="0" max="9" step="0.1" value= "2.8" oninput="cohesionSlider(this.value)">
-                <input type="range" min="0" max="9" step="0.1" value= "3" oninput="separationSlider(this.value)">
+                <div class="column">
+                    <p class="sliderText">Sight Distance</p>
+                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="sightDistanceSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Sight Degrees</p>
+                    <input class="slider" type="range" min="50" max="360" value= "300" oninput="sightDegreesSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Alignment</p>
+                    <input class="slider" type="range" min="0" max="9" value= "3" oninput="alignmentSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Cohesion</p>
+                    <input class="slider" type="range" min="0" max="9" value= "2.9" oninput="cohesionSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Separation</p>
+                    <input class="slider" type="range" min="0" max="9" value= "3" oninput="separationSlider(this.value)">
+                </div>
             </div>
         </div>
     </div>

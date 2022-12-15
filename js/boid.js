@@ -15,14 +15,14 @@ class Boid {
 
         // Slider variables
         this.alignmentForce = 3;
-        this.cohesionForce = 2.8;
+        this.cohesionForce = 2.9;
         this.separationForce = 3;
         this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce];
 
-        this.speed = 5;
-        this.torque = 0.2;
-        
-        this.sightDistance = 100;
+        this.speed = window.innerHeight * 0.005;
+        this.torque = window.innerHeight * 0.0001;
+
+        this.sightDistance = window.innerHeight * 0.15;
         this.sightDegrees = 300;
 
         this.position = createVector(random(screen.width), random(screen.height));
@@ -109,7 +109,7 @@ class Boid {
     // Displays current status of boid
     display(drawBackground=false) {
 
-        if(this.primary) {            
+        if(this.primary) {
 
             // Draws background if enabled
             if(drawBackground) {
@@ -132,18 +132,18 @@ class Boid {
             stroke(255);
             fill('rgba(255, 255, 255, 0.2)')
         }
-       
+
         if(!drawBackground) {
 
             // Boid size
             let height = 6.5;
             let width = 5;
-            
+
             // Boid position
             let p1 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height, this.rotation);
             let p2 = this.axisRotation(this.position.x, this.position.y, this.position.x + width, this.position.y + height, this.rotation);
             let p3 = this.axisRotation(this.position.x, this.position.y, this.position.x - width, this.position.y + height, this.rotation);
-            
+
             // Draws boid
             triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
         }

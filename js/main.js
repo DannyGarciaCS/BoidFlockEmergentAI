@@ -8,8 +8,8 @@ function setup() {
 
     // Initial boid population
     boids.push(new Boid(true));
-    for(let i=0; i<400; i++){ boids.push(new Boid()); }
-    
+    for(let i=0; i<200; i++){ boids.push(new Boid()); }
+
 }
 
 // Main program loop
@@ -36,27 +36,27 @@ function expand() {
 // Contract menu when not hovering
 function contract() {
     let i = select('#menu');
-	i.style('bottom', '-60px' );
+	i.style('bottom', '-' + window.innerHeight * 0.1 + 'px' );
 }
 
 // Handles sight distance slider
 function sightDistanceSlider(value) {
     for(let boid of boids) {
-        boid.sightDistance = value;
+        boid.sightDistance =  Math.round(value * 1000) / 1000;
     }
 }
 
 // Handles sight degrees slider
 function sightDegreesSlider(value) {
     for(let boid of boids) {
-        boid.sightDegrees = value;
+        boid.sightDegrees =  Math.round(value * 1000) / 1000;
     }
 }
 
 // Handles alignment slider
 function alignmentSlider(value) {
     for(let boid of boids) {
-        boid.alignmentForce = value;
+        boid.alignmentForce =  Math.round(value * 1000) / 1000;
         boid.updateForces();
     }
 }
@@ -64,7 +64,7 @@ function alignmentSlider(value) {
 // Handles cohesion slider
 function cohesionSlider(value) {
     for(let boid of boids) {
-        boid.cohesionForce = value;
+        boid.cohesionForce =  Math.round(value * 1000) / 1000;
         boid.updateForces();
     }
 }
@@ -72,7 +72,7 @@ function cohesionSlider(value) {
 // Handles separation slider
 function separationSlider(value) {
     for(let boid of boids) {
-        boid.separationForce = value;
+        boid.separationForce = Math.round(value * 1000) / 1000;
         boid.updateForces();
     }
 }
