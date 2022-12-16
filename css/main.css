@@ -45,7 +45,7 @@ canvas { position: fixed; }
 .row { display: flex; }
 
 .sliderText {
-    font-size: 2vh;
+    font-size: 1.8vh;
     color: white;
     margin: auto 0;
     text-align: center;
@@ -60,7 +60,7 @@ input {
 .slider {
     margin-top: 1vh;
     -webkit-appearance: none;
-    width: 15vh;
+    width: 13vh;
     height: 1.3vh;
     border-radius: 2vh;
     background: #e2e2e2;
@@ -91,4 +91,12 @@ input {
 .checkbox {
     width: 1.8vh;
     margin-right: 2vh;
+}
+
+#check1 { min-width: 13vh; }
+#check2 { min-width: 20vh; }
+
+/* Portrait resolution */
+@media screen and (orientation:portrait) {
+    #settings { display: none; }
 }
