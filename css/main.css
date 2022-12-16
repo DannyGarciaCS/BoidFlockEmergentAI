@@ -31,6 +31,8 @@ canvas { position: fixed; }
     background-color: rgb(40, 40, 40);
     display: flex;
     align-items: center;
+    overflow-x:auto;
+    overflow-y:hidden;
 }
 
 #controls {
@@ -38,14 +40,14 @@ canvas { position: fixed; }
     display: flex;
 }
 
-.column {
-    margin: 0 1.5vh;
-}
+.column { margin: 0 1.5vh; }
+
+.row { display: flex; }
 
 .sliderText {
     font-size: 2vh;
     color: white;
-    margin: 0;
+    margin: auto 0;
     text-align: center;
 }
 
@@ -84,4 +86,9 @@ input {
     border-radius: 50%;
     background: #1e82f5;
     cursor: pointer;
+}
+
+.checkbox {
+    width: 1.8vh;
+    margin-right: 2vh;
 }

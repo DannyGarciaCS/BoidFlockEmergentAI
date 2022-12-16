@@ -7,7 +7,8 @@
 
     <!-- Meta data -->
     <title>Danny Garcia CS</title>
-    <meta name="description" content="">
+    <meta name="description" content="Algorithm used to simulate the realistic movement of birds, fish, and other natural flocking creatures
+    through an emergent system (system that does not depend on its individual parts, but on their relationships to one another).">
     <meta name="author" content="Danny Garcia">
 
     <!-- JavaScript libraries -->
@@ -27,10 +28,25 @@
     <!-- Settings menu -->
     <div id="menu" onmouseover="expand()" onmouseout="contract()">
 
-        <p id="title">▼ CONTROLS</p>
+        <p id="title">▼ SETTINGS</p>
 
         <div id="settings">
             <div id="controls">
+
+                <div class="column">
+                    <p class="sliderText">Speed</p>
+                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="speedSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Torque</p>
+                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="torqueSlider(this.value)">
+                </div>
+
+                <div class="column">
+                    <p class="sliderText">Boids</p>
+                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="boidsSlider(this.value)">
+                </div>
 
                 <div class="column">
                     <p class="sliderText">Sight Distance</p>
@@ -55,6 +71,26 @@
                 <div class="column">
                     <p class="sliderText">Separation</p>
                     <input class="slider" type="range" min="0" max="9" value= "3" oninput="separationSlider(this.value)">
+                </div>
+
+
+                <div class="column">
+                    <div class="row">
+                        <input class="checkbox" type="checkbox" id="sightLineBox" name="sightLineBox" value="yes">
+                        <p class="sliderText">Sight Line</p>
+                    </div>
+
+                    <div class="row">
+                        <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox" value="yes">
+                        <p class="sliderText">Manual</p>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="row">
+                        <input class="checkbox" type="checkbox" id="manualBox" name="manualBox" value="yes">
+                        <p class="sliderText">Accurate (Slow)</p>
+                    </div>
                 </div>
             </div>
         </div>
