@@ -16,7 +16,7 @@ function setup() {
 function draw() {
 
     // Canvas background
-    background(60);
+    background(60, 60, 60, 160);
 
     // Updates and draws all boids (Main boid background in bottom layer, main boid in top layer)
     boids[0].update(boids);
@@ -39,17 +39,38 @@ function contract() {
 	i.style('bottom', '-' + window.innerHeight * 0.1 + 'px' );
 }
 
-// Handles sight distance slider
-function sightDistanceSlider(value) {
+// Handles movement slider
+function speedSlider(value) {
     for(let boid of boids) {
-        boid.sightDistance =  Math.round(value * 1000) / 1000;
+        boid.speed =  window.innerHeight * value / 1000;
     }
 }
 
-// Handles sight degrees slider
-function sightDegreesSlider(value) {
+// Handles torque slider
+function torqueSlider(value) {
     for(let boid of boids) {
-        boid.sightDegrees =  Math.round(value * 1000) / 1000;
+        boid.torque =  window.innerHeight * value / 100000;
+    }
+}
+
+// Handles number of boids slider (Naive implementation avoids conflicts)
+function boidsSlider(value) {
+
+    if(boids.length < value) {
+        while(boids.length < value) {
+            boids.push(new Boid());
+        }
+    } else if(boids.length > value) {
+        while(boids.length > value) {
+            boids.splice(boids.length - 1, 1);
+        }
+    }
+}
+
+// Handles sight distance slider
+function sightDistanceSlider(value) {
+    for(let boid of boids) {
+        boid.sightDistance =  window.innerHeight * value / 1000;
     }
 }
 
@@ -74,5 +95,27 @@ function separationSlider(value) {
     for(let boid of boids) {
         boid.separationForce = Math.round(value * 1000) / 1000;
         boid.updateForces();
+    }
+}
+
+// Handles sight line checkbox
+function sightLineBoxClick(box, checked) {
+    if(checked) {
+        for(let boid of boids) { boid.displaySightLine = true; }
+        box.checked = false;
+    } else if(!checked) {
+        for(let boid of boids) { boid.displaySightLine = false; }
+        box.checked = true;
+    }
+}
+
+// Handles highlight checkbox
+function highlightBoxClick(box, checked) {
+    if(checked) {
+        boids[0].highlight = true;
+        box.checked = false;
+    } else if(!checked) {
+        boids[0].highlight = false;
+        box.checked = true;
     }
 }

@@ -59,7 +59,7 @@ input {
 
 .slider {
     margin-top: 1vh;
-    -webkit-appearance: none;
+    appearance: none;
     width: 13vh;
     height: 1.3vh;
     border-radius: 2vh;

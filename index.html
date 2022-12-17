@@ -21,10 +21,6 @@
 </head>
 <body>
 
-    <!-- Main JavaScript files -->
-    <script src="js/boid.js"></script>
-    <script src="js/main.js"></script>
-
     <!-- Settings menu -->
     <div id="menu" onmouseover="expand()" onmouseout="contract()">
 
@@ -35,27 +31,22 @@
 
                 <div class="column">
                     <p class="sliderText">Speed</p>
-                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="speedSlider(this.value)">
+                    <input class="slider" type="range" min="1" max="15" value= "4" oninput="speedSlider(this.value)">
                 </div>
 
                 <div class="column">
                     <p class="sliderText">Torque</p>
-                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="torqueSlider(this.value)">
+                    <input class="slider" type="range" min="0" max="50" value= "10" oninput="torqueSlider(this.value)">
                 </div>
 
                 <div class="column">
                     <p class="sliderText">Boids</p>
-                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="boidsSlider(this.value)">
+                    <input class="slider" type="range" min="5" max="30" value= "20" oninput="boidsSlider(this.value)">
                 </div>
 
                 <div class="column">
                     <p class="sliderText">Sight Distance</p>
-                    <input class="slider" type="range" min="50" max="300" value= "100" oninput="sightDistanceSlider(this.value)">
-                </div>
-
-                <div class="column">
-                    <p class="sliderText">Sight Degrees</p>
-                    <input class="slider" type="range" min="50" max="360" value= "300" oninput="sightDegreesSlider(this.value)">
+                    <input class="slider" type="range" min="50" max="300" value= "200" oninput="sightDistanceSlider(this.value)">
                 </div>
 
                 <div class="column">
@@ -76,7 +67,8 @@
 
                 <div class="column" id="check1">
                     <div class="row">
-                        <input class="checkbox" type="checkbox" id="sightLineBox" name="sightLineBox" value="yes">
+                        <input class="checkbox" type="checkbox" id="sightLineBox" checked="true"
+                        name="sightLineBox" onclick="sightLineBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Sight Line</p>
                     </div>
 
@@ -91,10 +83,20 @@
                         <input class="checkbox" type="checkbox" id="manualBox" name="manualBox" value="yes">
                         <p class="sliderText">Accurate (Slow)</p>
                     </div>
+
+                    <div class="row">
+                        <input class="checkbox" type="checkbox" id="highlightBox" checked="true"
+                        name="highlightBox" onclick="highlightBoxClick(this, this.checked); this.checked=!this.checked">
+                        <p class="sliderText">Highlight Main Boid</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Main JavaScript files -->
+    <script src="js/boid.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>

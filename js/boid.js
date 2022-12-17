@@ -1,17 +1,11 @@
 
-// Can be controlled with wasd
-// Directional line
-// Optimizations
-// Speed slider
-// population slider
-// fix scrollbars
-
 class Boid {
 
     // Object constructor
     constructor(primary) {
 
         this.primary = primary;
+        this.highlight = primary;
 
         // Slider variables
         this.alignmentForce = 3;
@@ -19,11 +13,11 @@ class Boid {
         this.separationForce = 3;
         this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce];
 
-        this.speed = window.innerHeight * 0.005;
-        this.torque = window.innerHeight * 0.0001;
+        this.speed = window.innerHeight * 0.004;
+        this.torque = 0.1;
 
-        this.sightDistance = window.innerHeight * 0.15;
-        this.sightDegrees = 300;
+        this.sightDistance = window.innerHeight * 0.20;
+        this.displaySightLine = true;
 
         this.position = createVector(random(screen.width), random(screen.height));
         this.velocity = p5.Vector.random2D();
@@ -109,18 +103,20 @@ class Boid {
     // Displays current status of boid
     display(drawBackground=false) {
 
-        if(this.primary) {
+        if(this.primary && this.highlight) {
 
             // Draws background if enabled
             if(drawBackground) {
-                strokeWeight(3);
-                stroke('rgba(0, 100, 255, 0.8)')
-                fill('rgba(0, 100, 255, 0.11)')
+                strokeWeight(window.innerHeight / 300);
+                stroke('rgba(0, 100, 255, 0.5)')
+                fill('rgba(0, 100, 255, 0.05)')
+
+                // Draws vision
                 circle(this.position.x, this.position.y, this.sightDistance);
             }
 
             // Main boid visuals
-            strokeWeight(2);
+            strokeWeight(window.innerHeight / 400);
             stroke(210, 25, 50);
             fill('rgb(210, 25, 50)')
         }
@@ -128,7 +124,7 @@ class Boid {
         else {
 
             // Generic boid visuals
-            strokeWeight(1);
+            strokeWeight(window.innerHeight / 800);
             stroke(255);
             fill('rgba(255, 255, 255, 0.2)')
         }
@@ -136,8 +132,8 @@ class Boid {
         if(!drawBackground) {
 
             // Boid size
-            let height = 6.5;
-            let width = 5;
+            let height = window.innerHeight / 125;
+            let width = window.innerHeight / 200;
 
             // Boid position
             let p1 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height, this.rotation);
@@ -146,16 +142,26 @@ class Boid {
 
             // Draws boid
             triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+
+            // Draws sight line if enabled
+            if(this.displaySightLine) {
+                let p4 = this.axisRotation(this.position.x, this.position.y, this.position.x, this.position.y - height * 3.5, this.rotation);
+                line(p1.x, p1.y, p4.x, p4.y);
+            }
         }
     }
 
     // Rotates a point across a given axis
     axisRotation(axisX, axisY, x, y, angle) {
-        const radians = (PI / 180) * angle
+        const radians = this.degToRad(angle)
         let cos = Math.cos(radians);
         let sin = Math.sin(radians);
         let finalX = (cos * (x - axisX)) + (sin * (y - axisY)) + axisX;
         let finalY = (cos * (y - axisY)) - (sin * (x - axisX)) + axisY;
         return createVector(finalX, finalY);
     }
+
+    // Conversion functions
+    degToRad(angle) { return (PI / 180) * angle }
+    radToDeg(angle) { return angle * (180 / Math.PI) }
 }
