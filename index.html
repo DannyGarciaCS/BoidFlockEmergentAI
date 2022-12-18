@@ -41,7 +41,7 @@
 
                 <div class="column">
                     <p class="sliderText">Boids</p>
-                    <input class="slider" type="range" min="5" max="30" value= "20" oninput="boidsSlider(this.value)">
+                    <input class="slider" type="range" min="50" max="500" value= "200" oninput="boidsSlider(this.value)">
                 </div>
 
                 <div class="column">
@@ -73,7 +73,8 @@
                     </div>
 
                     <div class="row">
-                        <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox" value="yes">
+                        <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox"
+                        name="highlightBox" onclick="manualBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Manual</p>
                     </div>
                 </div>

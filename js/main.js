@@ -119,3 +119,34 @@ function highlightBoxClick(box, checked) {
         box.checked = true;
     }
 }
+
+// Handles manual controls checkbox
+function manualBoxClick(box, checked) {
+    if(checked) {
+        boids[0].manual = true;
+        boids[0].velocity.x *= 0.00001;
+        boids[0].velocity.y *= 0.00001;
+        box.checked = false;
+    } else if(!checked) {
+        boids[0].manual = false;
+        box.checked = true;
+    }
+}
+
+document.addEventListener('keydown', (event) => {
+
+    if(event.code == "KeyD" && boids[0].manual) { boids[0].pressed("D") }
+    if(event.code == "KeyW" && boids[0].manual) { boids[0].pressed("W") }
+    if(event.code == "KeyA" && boids[0].manual) { boids[0].pressed("A") }
+    if(event.code == "KeyS" && boids[0].manual) { boids[0].pressed("S") }
+
+});
+
+document.addEventListener('keyup', (event) => {
+
+    if(event.code == "KeyD" && boids[0].manual) { boids[0].released("D") }
+    if(event.code == "KeyW" && boids[0].manual) { boids[0].released("W") }
+    if(event.code == "KeyA" && boids[0].manual) { boids[0].released("A") }
+    if(event.code == "KeyS" && boids[0].manual) { boids[0].released("S") }
+
+});

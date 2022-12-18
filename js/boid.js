@@ -6,6 +6,9 @@ class Boid {
 
         this.primary = primary;
         this.highlight = primary;
+        this.manual = false;
+        this.thrustX = [0, 0];
+        this.thrustY = [0, 0];
 
         // Slider variables
         this.alignmentForce = 3;
@@ -23,6 +26,20 @@ class Boid {
         this.velocity = p5.Vector.random2D();
         this.acceleration = createVector();
         this.rotation = 0;
+    }
+
+    pressed(key) {
+        if(key=="D") { this.thrustX[1] = 1; }
+        if(key=="A") { this.thrustX[0] = -1; }
+        if(key=="W") { this.thrustY[1] = -1; }
+        if(key=="S") { this.thrustY[0] = 1; }
+    }
+
+    released(key) {
+        if(key=="D") { this.thrustX[1] = 0; }
+        if(key=="A") { this.thrustX[0] = 0; }
+        if(key=="W") { this.thrustY[1] = 0; }
+        if(key=="S") { this.thrustY[0] = 0; }
     }
 
     updateForces() { this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce]; }
@@ -46,39 +63,45 @@ class Boid {
         let directions = [createVector(), createVector(), createVector()];
         let count = 0;
 
-        for(let boid of boids) {
+        if(!this.manual) {
 
-            // We are not comparing to self
-            if(boid != this) {
+            for(let boid of boids) {
 
-                // Determines distance between boids
-                let distance = dist(this.position.x, this.position.y, boid.position.x, boid.position.y);
+                // We are not comparing to self
+                if(boid != this) {
 
-                // Distance is within sightDistance
-                if(distance <= this.sightDistance) {
-                    directions[0].add(boid.velocity);
-                    directions[1].add(boid.position);
-                    directions[2].add(p5.Vector.sub(this.position, boid.position).div(distance * distance));
-                    count += 1;
+                    // Determines distance between boids
+                    let distance = dist(this.position.x, this.position.y, boid.position.x, boid.position.y);
+
+                    // Distance is within sightDistance
+                    if(distance <= this.sightDistance) {
+                        directions[0].add(boid.velocity);
+                        directions[1].add(boid.position);
+                        directions[2].add(p5.Vector.sub(this.position, boid.position).div(distance * distance));
+                        count += 1;
+                    }
                 }
             }
-        }
 
+            // Applies directional changes
+            if(count > 0) {
 
-        // Applies directional changes
-        if(count > 0) {
+                // Averages directions
+                for(let direction of directions) { direction.div(count); }
+                directions[1].sub(this.position);
 
-            // Averages directions
-            for(let direction of directions) { direction.div(count); }
-            directions[1].sub(this.position);
-
-            // Changes acceleration
-            for(let direction in directions) {
-                directions[direction].setMag(this.speed);
-                directions[direction].sub(this.velocity);
-                directions[direction].limit(this.torque);
-                this.acceleration.add(directions[direction].mult(this.forces[direction]));
+                // Changes acceleration
+                for(let direction in directions) {
+                    directions[direction].setMag(this.speed);
+                    directions[direction].sub(this.velocity);
+                    directions[direction].limit(this.torque);
+                    this.acceleration.add(directions[direction].mult(this.forces[direction]));
+                }
             }
+
+        } else {
+            this.acceleration.x = this.thrustX[0] + this.thrustX[1];
+            this.acceleration.y = this.thrustY[0] + this.thrustY[1];
         }
 
     }
@@ -96,6 +119,35 @@ class Boid {
         // Update boid's position and velocity
         this.position.add(this.velocity);
         this.rotation = Math.atan2(-this.velocity.x, -this.velocity.y) / (PI / 180);
+
+        // Boid is being controlled manually
+        if(this.manual) {
+
+            // Limits boid speed
+            if(this.velocity.x > this.speed) { this.velocity.x = this.speed; }
+            if(this.velocity.x < -this.speed) { this.velocity.x = -this.speed; }
+            if(this.velocity.y > this.speed) { this.velocity.y = this.speed; }
+            if(this.velocity.y < -this.speed) { this.velocity.y = -this.speed; }
+
+            // Breaks on X axis
+            if(this.velocity.x != 0 && this.thrustX[0] + this.thrustX[1] == 0) {
+                if(this.velocity.x > 0) {
+                    this.velocity.x = Math.max(this.velocity.x - 0.5, 0);
+                } else if(this.velocity.x < 0) {
+                    this.velocity.x = Math.min(this.velocity.x + 0.5, 0);
+                }
+            }
+
+            // Breaks on Y axis
+            if(this.velocity.y != 0 && this.thrustY[0] + this.thrustY[1] == 0) {
+                if(this.velocity.y > 0) {
+                    this.velocity.y = Math.max(this.velocity.y - 0.5, 0);
+                } else if(this.velocity.y < -0.1) {
+                    this.velocity.y = Math.min(this.velocity.y + 0.5, 0);
+                }
+            }
+        }
+
         this.velocity.add(this.acceleration);
 
     }
