@@ -18,6 +18,10 @@ function draw() {
     // Canvas background
     background(60, 60, 60, 160);
 
+    for(let boid of boids) {
+        if(boid.secondary) { boid.secondary = false; }
+    }
+
     // Updates and draws all boids (Main boid background in bottom layer, main boid in top layer)
     boids[0].update(boids);
     boids[0].display(true);
@@ -150,3 +154,14 @@ document.addEventListener('keyup', (event) => {
     if(event.code == "KeyS" && boids[0].manual) { boids[0].released("S") }
 
 });
+
+// Handles manual controls checkbox
+function accurateBoxClick(box, checked) {
+    if(checked) {
+        for(let boid of boids) { boid.accurate = true; }
+        box.checked = false;
+    } else if(!checked) {
+        for(let boid of boids) { boid.accurate = false; }
+        box.checked = true;
+    }
+}

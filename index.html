@@ -36,12 +36,12 @@
 
                 <div class="column">
                     <p class="sliderText">Torque</p>
-                    <input class="slider" type="range" min="0" max="50" value= "10" oninput="torqueSlider(this.value)">
+                    <input class="slider" type="range" min="10" max="40" value= "10" oninput="torqueSlider(this.value)">
                 </div>
 
                 <div class="column">
                     <p class="sliderText">Boids</p>
-                    <input class="slider" type="range" min="50" max="500" value= "200" oninput="boidsSlider(this.value)">
+                    <input class="slider" type="range" min="50" max="750" value= "200" oninput="boidsSlider(this.value)">
                 </div>
 
                 <div class="column">
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="row">
-                        <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox"
+                        <input class="checkbox" type="checkbox" id="manualBox" name="manualBox"
                         name="highlightBox" onclick="manualBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Manual</p>
                     </div>
@@ -81,7 +81,8 @@
 
                 <div class="column" id="check2">
                     <div class="row">
-                        <input class="checkbox" type="checkbox" id="manualBox" name="manualBox" value="yes">
+                        <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox"
+                        onclick="accurateBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Accurate (Slow)</p>
                     </div>
 

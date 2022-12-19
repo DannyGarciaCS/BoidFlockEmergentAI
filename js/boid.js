@@ -5,6 +5,8 @@ class Boid {
     constructor(primary) {
 
         this.primary = primary;
+        this.accurate = false;
+        this.secondary = false;
         this.highlight = primary;
         this.manual = false;
         this.thrustX = [0, 0];
@@ -28,6 +30,7 @@ class Boid {
         this.rotation = 0;
     }
 
+    // Handles movement key press
     pressed(key) {
         if(key=="D") { this.thrustX[1] = 1; }
         if(key=="A") { this.thrustX[0] = -1; }
@@ -35,6 +38,7 @@ class Boid {
         if(key=="S") { this.thrustY[0] = 1; }
     }
 
+    // Handles movement key release
     released(key) {
         if(key=="D") { this.thrustX[1] = 0; }
         if(key=="A") { this.thrustX[0] = 0; }
@@ -79,6 +83,9 @@ class Boid {
                         directions[1].add(boid.position);
                         directions[2].add(p5.Vector.sub(this.position, boid.position).div(distance * distance));
                         count += 1;
+
+                        if(this.primary && this.highlight) { boid.secondary = true; }
+                        if(!this.accurate && count > 8) { break; }
                     }
                 }
             }
@@ -171,6 +178,13 @@ class Boid {
             strokeWeight(window.innerHeight / 400);
             stroke(210, 25, 50);
             fill('rgb(210, 25, 50)')
+        }
+        else if(this.secondary) {
+
+            // Main boid visuals
+            strokeWeight(window.innerHeight / 800);
+            stroke(180, 25, 50);
+            fill('rgb(150, 50, 210)')
         }
 
         else {
