@@ -2,10 +2,11 @@
 class Boid {
 
     // Object constructor
-    constructor(primary) {
+    constructor(primary, accurate=false, alignmentForce=3, cohesionForce=2.9,
+    separationForce=3, speed=0.004, torque=0.1, sightDistance=0.2) {
 
         this.primary = primary;
-        this.accurate = false;
+        this.accurate = accurate;
         this.secondary = false;
         this.highlight = primary;
         this.manual = false;
@@ -13,15 +14,15 @@ class Boid {
         this.thrustY = [0, 0];
 
         // Slider variables
-        this.alignmentForce = 3;
-        this.cohesionForce = 2.9;
-        this.separationForce = 3;
+        this.alignmentForce = alignmentForce;
+        this.cohesionForce = cohesionForce;
+        this.separationForce = separationForce;
         this.forces = [this.alignmentForce, this.cohesionForce, this.separationForce];
 
-        this.speed = window.innerHeight * 0.004;
-        this.torque = 0.1;
+        this.speed = window.innerHeight * speed;
+        this.torque = torque;
 
-        this.sightDistance = window.innerHeight * 0.20;
+        this.sightDistance = window.innerHeight * sightDistance;
         this.displaySightLine = true;
 
         this.position = createVector(random(screen.width), random(screen.height));

@@ -61,8 +61,11 @@ function torqueSlider(value) {
 function boidsSlider(value) {
 
     if(boids.length < value) {
+        let adjustedSpeed = boids[0].speed / window.innerHeight
+        let adjustedSight = boids[0].sightDistance / window.innerHeight
         while(boids.length < value) {
-            boids.push(new Boid());
+            boids.push(new Boid(false, boids[0].accurate, boids[0].alignmentForce, boids[0].cohesionForce,
+            boids[0].separationForce, adjustedSpeed, boids[0].torque, adjustedSight));
         }
     } else if(boids.length > value) {
         while(boids.length > value) {
