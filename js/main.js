@@ -8,7 +8,7 @@ function setup() {
 
     // Initial boid population
     boids.push(new Boid(true));
-    for(let i=0; i<200; i++){ boids.push(new Boid()); }
+    for(let i=0; i<300; i++){ boids.push(new Boid()); }
 
 }
 
@@ -140,6 +140,7 @@ function manualBoxClick(box, checked) {
     }
 }
 
+// Handles keydown behavior
 document.addEventListener('keydown', (event) => {
 
     if(event.code == "KeyD" && boids[0].manual) { boids[0].pressed("D") }
@@ -149,6 +150,7 @@ document.addEventListener('keydown', (event) => {
 
 });
 
+// Handles keyup behavior
 document.addEventListener('keyup', (event) => {
 
     if(event.code == "KeyD" && boids[0].manual) { boids[0].released("D") }
@@ -158,7 +160,7 @@ document.addEventListener('keyup', (event) => {
 
 });
 
-// Handles manual controls checkbox
+// Handles accuracy checkbox
 function accurateBoxClick(box, checked) {
     if(checked) {
         for(let boid of boids) { boid.accurate = true; }
