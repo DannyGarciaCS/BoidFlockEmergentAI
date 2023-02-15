@@ -1,0 +1,3 @@
+This version is an older implementation of the algorithm using Java.
+Use it if you prefer it over the HTML/CSS version, though that version was built to be more accessible.
+This version goes by Boid Flock Simulator.

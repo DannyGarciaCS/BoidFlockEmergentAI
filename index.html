@@ -11,6 +11,9 @@
     through an emergent system (system that does not depend on its individual parts, but on their relationships to one another).">
     <meta name="author" content="Danny Garcia">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/icon.png">
+
     <!-- JavaScript libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
@@ -67,29 +70,43 @@
 
                 <div class="column" id="check1">
                     <div class="row">
-                        <input class="checkbox" type="checkbox" id="sightLineBox" checked="true"
-                        name="sightLineBox" onclick="sightLineBoxClick(this, this.checked); this.checked=!this.checked">
-                        <p class="sliderText">Sight Line</p>
+                        <input class="checkbox" type="checkbox" id="debugBox" checked="true"
+                        name="debugBox" onclick="debugBoxClick(this, this.checked); this.checked=!this.checked">
+                        <p class="sliderText">Debug</p>
                     </div>
 
                     <div class="row">
                         <input class="checkbox" type="checkbox" id="manualBox" name="manualBox"
-                        name="highlightBox" onclick="manualBoxClick(this, this.checked); this.checked=!this.checked">
+                        name="manualBox" onclick="manualBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Manual</p>
                     </div>
                 </div>
 
                 <div class="column" id="check2">
                     <div class="row">
+                        <input class="checkbox" type="checkbox" id="sightDistanceBox" checked="true"
+                        name="sightDistanceBox" onclick="sightDistanceBoxClick(this, this.checked); this.checked=!this.checked">
+                        <p class="sliderText">Sight Distance</p>
+                    </div>
+
+                    <div class="row">
                         <input class="checkbox" type="checkbox" id="accurateBox" name="accurateBox"
                         onclick="accurateBoxClick(this, this.checked); this.checked=!this.checked">
                         <p class="sliderText">Accurate (Slow)</p>
+                    </div>
+                </div>
+
+                <div class="column" id="check3">
+                    <div class="row">
+                        <input class="checkbox" type="checkbox" id="sightLineBox" checked="true"
+                        name="sightLineBox" onclick="sightLineBoxClick(this, this.checked); this.checked=!this.checked">
+                        <p class="sliderText">Sight Line</p>
                     </div>
 
                     <div class="row">
                         <input class="checkbox" type="checkbox" id="highlightBox" checked="true"
                         name="highlightBox" onclick="highlightBoxClick(this, this.checked); this.checked=!this.checked">
-                        <p class="sliderText">Highlight Main Boid</p>
+                        <p class="sliderText">Highlight</p>
                     </div>
                 </div>
             </div>

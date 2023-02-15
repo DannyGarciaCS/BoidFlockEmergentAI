@@ -7,7 +7,7 @@ html, body {
 canvas { position: fixed; }
 
 #menu {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgb(70, 70, 70);
     position: fixed;
     bottom: -10vh;
     z-index: 1;
@@ -90,11 +90,12 @@ input {
 
 .checkbox {
     width: 1.8vh;
-    margin-right: 2vh;
+    margin-right: 1.5vh;
 }
 
 #check1 { min-width: 13vh; }
 #check2 { min-width: 20vh; }
+#check3 { min-width: 13vh; }
 
 /* Portrait resolution */
 @media screen and (orientation:portrait) {

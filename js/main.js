@@ -16,7 +16,7 @@ function setup() {
 function draw() {
 
     // Canvas background
-    background(60, 60, 60, 160);
+    background(60);
 
     for(let boid of boids) {
         if(boid.secondary) { boid.secondary = false; }
@@ -24,11 +24,11 @@ function draw() {
 
     // Updates and draws all boids (Main boid background in bottom layer, main boid in top layer)
     boids[0].update(boids);
-    boids[0].display(true);
+    boids[0].display(boids, true);
     for (let boid=1; boid<boids.length; boid++) {
         boids[boid].update(boids);
-        boids[boid].display();
-    } boids[0].display();
+        boids[boid].display(boids);
+    } boids[0].display(boids);
 }
 
 // Expand menu on hover
@@ -105,6 +105,52 @@ function separationSlider(value) {
     }
 }
 
+// Handles debug checkbox
+function debugBoxClick(box, checked) {
+    if(checked) {
+        boids[0].debug = true;
+        box.checked = false;
+    } else if(!checked) {
+        boids[0].debug = false;
+        box.checked = true;
+    }
+}
+
+// Handles manual controls checkbox
+function manualBoxClick(box, checked) {
+    if(checked) {
+        boids[0].manual = true;
+        boids[0].velocity.x *= 0.00001;
+        boids[0].velocity.y *= 0.00001;
+        box.checked = false;
+    } else if(!checked) {
+        boids[0].manual = false;
+        box.checked = true;
+    }
+}
+
+// Handles sight distance checkbox
+function sightDistanceBoxClick(box, checked) {
+    if(checked) {
+        for(let boid of boids) { boid.displaySightDistance = true; }
+        box.checked = false;
+    } else if(!checked) {
+        for(let boid of boids) { boid.displaySightDistance = false; }
+        box.checked = true;
+    }
+}
+
+// Handles accuracy checkbox
+function accurateBoxClick(box, checked) {
+    if(checked) {
+        for(let boid of boids) { boid.accurate = true; }
+        box.checked = false;
+    } else if(!checked) {
+        for(let boid of boids) { boid.accurate = false; }
+        box.checked = true;
+    }
+}
+
 // Handles sight line checkbox
 function sightLineBoxClick(box, checked) {
     if(checked) {
@@ -123,19 +169,6 @@ function highlightBoxClick(box, checked) {
         box.checked = false;
     } else if(!checked) {
         boids[0].highlight = false;
-        box.checked = true;
-    }
-}
-
-// Handles manual controls checkbox
-function manualBoxClick(box, checked) {
-    if(checked) {
-        boids[0].manual = true;
-        boids[0].velocity.x *= 0.00001;
-        boids[0].velocity.y *= 0.00001;
-        box.checked = false;
-    } else if(!checked) {
-        boids[0].manual = false;
         box.checked = true;
     }
 }
@@ -160,13 +193,3 @@ document.addEventListener('keyup', (event) => {
 
 });
 
-// Handles accuracy checkbox
-function accurateBoxClick(box, checked) {
-    if(checked) {
-        for(let boid of boids) { boid.accurate = true; }
-        box.checked = false;
-    } else if(!checked) {
-        for(let boid of boids) { boid.accurate = false; }
-        box.checked = true;
-    }
-}
